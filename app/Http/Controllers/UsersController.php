@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\User;
+
+class UsersController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = User::query();
+        
+        // Filter by specific fields
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+        
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+        
+        if ($request->has('phone')) {
+            $query->where('phone', 'like', '%' . $request->phone . '%');
+        }
+        
+        if ($request->has('address')) {
+            $query->where('address', 'like', '%' . $request->address . '%');
+        }
+        
+        if ($request->has('role')) {
+            $query->where('role', $request->role);
+        }
+        
+        // General search across multiple columns
+        if ($request->has('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%')
+                  ->orWhere('phone', 'like', '%' . $request->search . '%')
+                  ->orWhere('address', 'like', '%' . $request->search . '%');
+            });
+        }
+        
+        $users = $query->get();
+        
+        if ($users->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Users not found'
+            ], 404);
+        }
+        
+        return response()->json($users);
+    }
+    
+    public function show($id)
+    {
+        $user = User::find($id);
+        
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+        
+        return response()->json($user);
+    }
+}
