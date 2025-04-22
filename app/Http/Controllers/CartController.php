@@ -20,8 +20,8 @@ class CartController extends Controller
         
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+                $q->where('user_id', 'like', '%' . $request->search . '%')
+                  ->orwhere('id', 'like', '%' . $request->search . '%');
             });
         }
 

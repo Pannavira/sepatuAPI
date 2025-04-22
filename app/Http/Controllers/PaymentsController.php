@@ -27,45 +27,29 @@ class PaymentsController extends Controller
             $query->where('payment_status', $request->payment_status);
         }
         
-        if ($request->has('start_date')) {
-            $query->where('payment_date', '>=', $request->start_date);
+        if ($request->has('amount')) {
+            $query->where('amount', '>=', $request->amount);
         }
         
-        if ($request->has('end_date')) {
-            $query->where('payment_date', '<=', $request->end_date);
+        if ($request->has('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('id', 'like', '%' . $request->search . '%')
+                  ->orWhere('order_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('amount', 'like', '%' . $request->search . '%')
+                  ->orWhere('payment_method', 'like', '%' . $request->search . '%')
+                  ->orWhere('payment_status', 'like', '%' . $request->search . '%');
+            });
         }
         
-        if ($request->has('min_amount')) {
-            $query->where('amount', '>=', $request->min_amount);
-        }
-        
-        if ($request->has('max_amount')) {
-            $query->where('amount', '<=', $request->max_amount);
-        }
-        
-        $payments = $query->get();
-        
-        if ($payments->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Payments not found'
+                'message' => 'value tidak ditemukan'
             ], 404);
         }
-        
-        return response()->json($payments);
-    }
-    
-    public function show($id)
-    {
-        $payment = Payments::find($id);
-        
-        if (!$payment) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Payment not found'
-            ], 404);
-        }
-        
-        return response()->json($payment);
+
+        return response()->json($get);
     }
 }

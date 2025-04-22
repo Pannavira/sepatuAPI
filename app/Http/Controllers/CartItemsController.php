@@ -32,8 +32,11 @@ class CartItemsController extends Controller
         
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+                $q->where('id', 'like', '%' . $request->search . '%')
+                  ->orWhere('cart_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('product_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('size_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('quantity', 'like', '%' . $request->search . '%');
             });
         }
 

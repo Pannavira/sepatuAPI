@@ -19,37 +19,31 @@ class DashboardController extends Controller
             $query->where('user_id', $request->user_id);
         }
         
-        if ($request->has('layout')) {
-            $query->where('preferred_layout', $request->layout);
+        if ($request->has('preferred_layout')) {
+            $query->where('preferred_layout', $request->preferred_layout);
         }
         
-        if ($request->has('search')) {
-            $query->where('widget_settings', 'like', '%' . $request->search . '%');
+        if ($request->has('widget_settings')) {
+            $query->where('widget_settings', $request->widget_settings);
         }
-        
-        $dashboards = $query->get();
-        
-        if ($dashboards->isEmpty()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Dashboard configurations not found'
-            ], 404);
-        }
-        
-        return response()->json($dashboards);
-    }
 
-    public function show($id)
-    {
-        $dashboard = Dashboard::find($id);
-        
-        if (!$dashboard) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tidak di temukan'
-            ], 404);
+        if ($request->has('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('id', 'like', '%' . $request->search . '%')
+                  ->orWhere('user_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('preferred_layout', 'like', '%' . $request->search . '%')
+                  ->orWhere('widget_settings', 'like', '%' . $request->search . '%');
+            });
         }
         
-        return response()->json($dashboard);
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'value tidak ditemukan'], 404);
+            }
+
+        return response()->json($get);
     }
 }

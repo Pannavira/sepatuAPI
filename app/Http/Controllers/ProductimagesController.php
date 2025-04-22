@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductImages;
 
-class ProductImageController extends Controller
+class ProductImagesController extends Controller
 {
-    public function get(Request $request)
+    public function index(Request $request)
     {
-        $query = ProductImage::query();
+        $query = ProductImages::query();
         
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -19,45 +19,27 @@ class ProductImageController extends Controller
             $query->where('product_id', $request->product_id);
         }
         
-        $productImages = $query->get();
+        if ($request->has('image_url')) {
+            $query->where('image_url', $request->image_url);
+        }
+
+        if ($request->has('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('id', 'like', '%' . $request->search . '%')
+                  ->orWhere('product_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('image_url', 'like', '%' . $request->search . '%');
+            });
+        }
         
-        if ($productImages->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'No product images found'
+                'message' => 'value tidak ditemukan'
             ], 404);
         }
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => $productImages
-        ]);
-    }
-    
-    // Search product images by image URL
-    public function search(Request $request)
-    {
-        if (!$request->has('keyword')) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Search keyword is required'
-            ], 400);
-        }
-        
-        $keyword = $request->keyword;
-        
-        $productImages = ProductImage::where('image_url', 'like', '%' . $keyword . '%')->get();
-        
-        if ($productImages->isEmpty()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No product images found matching your search criteria'
-            ], 404);
-        }
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => $productImages
-        ]);
+
+        return response()->json($get);
     }
 }

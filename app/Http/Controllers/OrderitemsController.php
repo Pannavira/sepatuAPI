@@ -27,41 +27,32 @@ class OrderItemsController extends Controller
             $query->where('size_id', $request->size_id);
         }
         
-        if ($request->has('min_price')) {
-            $query->where('price', '>=', $request->min_price);
+        if ($request->has('quantity')) {
+            $query->where('quantity', $request->quantity);
         }
-        
-        if ($request->has('max_price')) {
-            $query->where('price', '<=', $request->max_price);
-        }
-        
+
         if ($request->has('quantity')) {
             $query->where('quantity', $request->quantity);
         }
         
-        $orderItems = $query->get();
-        
-        if ($orderItems->isEmpty()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Order items not found'
-            ], 404);
+        if ($request->has('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('id', 'like', '%' . $request->search . '%')
+                  ->orWhere('order_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('product_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('size_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('quantity', 'like', '%' . $request->search . '%');
+            });
         }
         
-        return response()->json($orderItems);
-    }
-    
-    public function show($id)
-    {
-        $orderItem = OrderItems::find($id);
-        
-        if (!$orderItem) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Order item not found'
-            ], 404);
-        }
-        
-        return response()->json($orderItem);
+                'message' => 'value tidak ditemukan'], 404);
+            }
+
+        return response()->json($get);
     }
 }

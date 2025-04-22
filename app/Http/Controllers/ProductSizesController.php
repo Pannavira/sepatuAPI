@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProductSize;
+use App\Models\ProductSizes;
 
 class ProductSizesController extends Controller
 {
     public function index(Request $request)
     {
-        $query = ProductSize::query();
+        $query = ProductSizes::query();
         
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -35,29 +35,15 @@ class ProductSizesController extends Controller
             });
         }
         
-        $productSizes = $query->get();
-        
-        if ($productSizes->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Product sizes not found'
+                'message' => 'value tidak ditemukan'
             ], 404);
         }
-        
-        return response()->json($productSizes);
-    }
-    
-    public function show($id)
-    {
-        $productSize = ProductSize::find($id);
-        
-        if (!$productSize) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Product size not found'
-            ], 404);
-        }
-        
-        return response()->json($productSize);
+
+        return response()->json($get);
     }
 }

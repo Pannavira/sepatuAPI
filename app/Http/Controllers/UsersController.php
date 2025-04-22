@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Users;
 
 class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::query();
+        $query = Users::query();
         
         // Filter by specific fields
         if ($request->has('id')) {
@@ -36,39 +36,25 @@ class UsersController extends Controller
             $query->where('role', $request->role);
         }
         
-        // General search across multiple columns
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
                   ->orWhere('email', 'like', '%' . $request->search . '%')
                   ->orWhere('phone', 'like', '%' . $request->search . '%')
+                  ->orWhere('role', 'like', '%' . $request->search . '%')
                   ->orWhere('address', 'like', '%' . $request->search . '%');
             });
         }
         
-        $users = $query->get();
-        
-        if ($users->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Users not found'
+                'message' => 'value tidak ditemukan'
             ], 404);
         }
-        
-        return response()->json($users);
-    }
-    
-    public function show($id)
-    {
-        $user = User::find($id);
-        
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'User not found'
-            ], 404);
-        }
-        
-        return response()->json($user);
+
+        return response()->json($get);
     }
 }

@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Review;
+use App\Models\Reviews;
 
 class ReviewsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Review::query();
+        $query = Reviews::query();
         
-        // Filter by specific fields
         if ($request->has('id')) {
             $query->where('id', $request->id);
         }
@@ -31,38 +30,32 @@ class ReviewsController extends Controller
         if ($request->has('comment')) {
             $query->where('comment', 'like', '%' . $request->comment . '%');
         }
+
+        if ($request->has('created_at')) {
+            $query->where('created_at', $request->created_at);
+        }
         
-        // General search across multiple columns
+        
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('comment', 'like', '%' . $request->search . '%')
-                  ->orWhere('rating', 'like', '%' . $request->search . '%');
+                  ->orWhere('rating', 'like', '%' . $request->search . '%')
+                  ->orWhere('product_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('user_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('created_at', 'like', '%' . $request->search . '%')
+                  ->orWhere('id', 'like', '%' . $request->search . '%');
             });
         }
         
-        $reviews = $query->get();
-        
-        if ($reviews->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Reviews not found'
+                'message' => 'value tidak ditemukan'
             ], 404);
         }
-        
-        return response()->json($reviews);
-    }
-    
-    public function show($id)
-    {
-        $review = Review::find($id);
-        
-        if (!$review) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Review not found'
-            ], 404);
-        }
-        
-        return response()->json($review);
+
+        return response()->json($get);
     }
 }

@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Size;
+use App\Models\Sizes;
 
 class SizesController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Size::query();
+        $query = Sizes::query();
         
-        // Filter by specific fields
-        if ($request->has('id')) {
+        if ($request->has(key: 'id')) {
             $query->where('id', $request->id);
         }
 
@@ -20,36 +19,21 @@ class SizesController extends Controller
             $query->where('size_label', $request->size_label);
         }
         
-        // General search across columns
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('size_label', 'like', '%' . $request->search . '%');
             });
         }
         
-        $sizes = $query->get();
-        
-        if ($sizes->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Sizes not found'
+                'message' => 'value tidak ditemukan'
             ], 404);
         }
-        
-        return response()->json($sizes);
-    }
-    
-    public function show($id)
-    {
-        $size = Size::find($id);
-        
-        if (!$size) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Size not found'
-            ], 404);
-        }
-        
-        return response()->json($size);
+
+        return response()->json($get);
     }
 }

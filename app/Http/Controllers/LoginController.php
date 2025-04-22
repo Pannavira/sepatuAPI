@@ -22,36 +22,38 @@ class LoginController extends Controller
         if ($request->has('username')) {
             $query->where('username', $request->username);
         }
+
+        if ($request->has('last_login')) {
+            $query->where('last_login', $request->last_login);
+        }
+
+        if ($request->has('created_at')) {
+            $query->where('created_at', $request->created_at);
+        }
+
+        if ($request->has('updated_at')) {
+            $query->where('updated_at', $request->updated_at);
+        }
         
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
-                $q->where('username', 'like', '%' . $request->search . '%');
+                $q->where('id', 'like', '%' . $request->search . '%')
+                  ->orWhere('user_id', 'like', '%' . $request->search . '%')
+                  ->orWhere('username', 'like', '%' . $request->search . '%')
+                  ->orWhere('last_login', 'like', '%' . $request->search . '%')
+                  ->orWhere('updated_at', 'like', '%' . $request->search . '%')
+                  ->orWhere('created_at', 'like', '%' . $request->search . '%');
             });
         }
         
-        $loginRecords = $query->get();
-        
-        if ($loginRecords->isEmpty()) {
+        $get = $query->get();
+
+        if ($get->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Login records not found'
-            ], 404);
-        }
-        
-        return response()->json($loginRecords);
-    }
-    
-    public function show($id)
-    {
-        $login = Login::find($id);
-        
-        if (!$login) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Login record not found'
-            ], 404);
-        }
-        
-        return response()->json($login);
+                'message' => 'value tidak ditemukan'], 404);
+            }
+
+        return response()->json($get);
     }
 }
