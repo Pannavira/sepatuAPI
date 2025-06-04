@@ -18,8 +18,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SizesController;
 use App\Http\Controllers\OrdersController;
 
-Route::get('/brands', [BrandsController::class, 'index']);
-Route::get('/carts', [CartController::class, 'index']);
+Route::apiResource('carts', CartController::class);
 Route::get('/cartitems', [CartItemsController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/categories', [CategoriesController::class, 'index']);
@@ -34,4 +33,4 @@ Route::get('/users', [UsersController::class, 'index']);
 Route::get('/sizes', [SizesController::class, 'index']);
 Route::get('/orders', [OrdersController::class, 'index']);
 
-//Test
+Route::apiResource('brands', BrandsController::class);

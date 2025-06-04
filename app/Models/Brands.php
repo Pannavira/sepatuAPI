@@ -10,4 +10,5 @@ class Brands extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description']; //protected digunakan agar name dan description dapat diisi CRUD nnti.
+    public $timestamps = false;
 }
