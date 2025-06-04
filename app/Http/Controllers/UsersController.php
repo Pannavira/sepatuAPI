@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Users;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+    // READ - Get all users with optional filters
     public function index(Request $request)
     {
         $query = Users::query();
@@ -36,6 +38,7 @@ class UsersController extends Controller
             $query->where('role', $request->role);
         }
         
+        // Global search filter
         if ($request->has('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
@@ -56,5 +59,114 @@ class UsersController extends Controller
         }
 
         return response()->json($get);
+    }
+
+    // CREATE - Store a new user
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:6',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+            'role' => 'required|in:user,admin'
+        ]);
+
+        $user = Users::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role' => $request->role
+        ]);
+
+        // Remove password from response for security
+        $user->makeHidden(['password']);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'data' => $user
+        ], 201);
+    }
+
+    // READ - Show a single user by ID
+    public function show($id)
+    {
+        $user = Users::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        // Hide password from response
+        $user->makeHidden(['password']);
+
+        return response()->json($user);
+    }
+
+    // UPDATE - Update an existing user
+    public function update(Request $request, $id)
+    {
+        $user = Users::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $id . '|max:255',
+            'password' => 'sometimes|required|string|min:6',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+            'role' => 'sometimes|required|in:user,admin'
+        ]);
+
+        $updateData = $request->only(['name', 'email', 'phone', 'address', 'role']);
+
+        // Hash password if provided
+        if ($request->has('password')) {
+            $updateData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($updateData);
+
+        // Hide password from response
+        $user->makeHidden(['password']);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User updated successfully',
+            'data' => $user
+        ]);
+    }
+
+    // DELETE - Delete a user
+    public function destroy($id)
+    {
+        $user = Users::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User deleted successfully'
+        ]);
     }
 }

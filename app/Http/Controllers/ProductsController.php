@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Products;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
+    // READ - Get all products or filtered products
     public function index(Request $request)
     {
         $query = Products::query();
@@ -71,5 +73,146 @@ class ProductsController extends Controller
         }
 
         return response()->json($get);
+    }
+
+    // READ - Get single product by ID
+    public function show($id)
+    {
+        $product = Products::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Product tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $product
+        ]);
+    }
+
+    // CREATE - Store new product
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category_id' => 'required|integer',
+            'brand_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $product = Products::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product berhasil ditambahkan',
+                'data' => $product
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menambahkan product',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // UPDATE - Update existing product
+    public function update(Request $request, $id)
+    {
+        $product = Products::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Product tidak ditemukan'
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string',
+            'price' => 'sometimes|required|numeric|min:0',
+            'stock' => 'sometimes|required|integer|min:0',
+            'category_id' => 'sometimes|required|integer',
+            'brand_id' => 'sometimes|required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $product->update($request->only([
+                'name', 'description', 'price', 'stock', 'category_id', 'brand_id'
+            ]));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product berhasil diupdate',
+                'data' => $product->fresh()
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal mengupdate product',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // DELETE - Delete product
+    public function destroy($id)
+    {
+        $product = Products::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Product tidak ditemukan'
+            ], 404);
+        }
+
+        try {
+            $product->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product berhasil dihapus'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menghapus product',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

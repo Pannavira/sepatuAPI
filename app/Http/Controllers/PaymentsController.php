@@ -2,54 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Payments;
+use Illuminate\Http\Request;
 
 class PaymentsController extends Controller
 {
-    public function index(Request $request)
+    // Tampilkan semua data pembayaran
+    public function index()
     {
-        $query = Payments::query();
-        
-        if ($request->has('id')) {
-            $query->where('id', $request->id);
+        $payments = Payments::all();
+        return response()->json($payments);
+    }
+
+    // Simpan data pembayaran baru
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'order_id' => 'required|integer|exists:orders,id',
+            'payment_date' => 'required|date',
+            'payment_method' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'payment_status' => 'required|string|max:255',
+        ]);
+
+        $payment = Payments::create($validated);
+        return response()->json($payment, 201);
+    }
+
+    // Tampilkan satu data pembayaran
+    public function show($id)
+    {
+        $payment = Payments::find($id);
+        if (!$payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
         }
-        
-        if ($request->has('order_id')) {
-            $query->where('order_id', $request->order_id);
+        return response()->json($payment);
+    }
+
+    // Update data pembayaran
+    public function update(Request $request, $id)
+    {
+        $payment = Payments::find($id);
+        if (!$payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
         }
 
-        if ($request->has('payment_method')) {
-            $query->where('payment_method', $request->payment_method);
-        }
-        
-        if ($request->has('payment_status')) {
-            $query->where('payment_status', $request->payment_status);
-        }
-        
-        if ($request->has('amount')) {
-            $query->where('amount', '>=', $request->amount);
-        }
-        
-        if ($request->has('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('id', 'like', '%' . $request->search . '%')
-                  ->orWhere('order_id', 'like', '%' . $request->search . '%')
-                  ->orWhere('amount', 'like', '%' . $request->search . '%')
-                  ->orWhere('payment_method', 'like', '%' . $request->search . '%')
-                  ->orWhere('payment_status', 'like', '%' . $request->search . '%');
-            });
-        }
-        
-        $get = $query->get();
+        $validated = $request->validate([
+            'order_id' => 'sometimes|integer|exists:orders,id',
+            'payment_date' => 'sometimes|date',
+            'payment_method' => 'sometimes|string|max:255',
+            'amount' => 'sometimes|numeric',
+            'payment_status' => 'sometimes|string|max:255',
+        ]);
 
-        if ($get->isEmpty()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'value tidak ditemukan'
-            ], 404);
+        $payment->update($validated);
+        return response()->json($payment);
+    }
+
+    // Hapus data pembayaran
+    public function destroy($id)
+    {
+        $payment = Payments::find($id);
+        if (!$payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
         }
 
-        return response()->json($get);
+        $payment->delete();
+        return response()->json(['message' => 'Payment deleted successfully']);
     }
 }

@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\CartItemsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LoginController;
@@ -18,19 +17,19 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SizesController;
 use App\Http\Controllers\OrdersController;
 
-Route::apiResource('carts', CartController::class);
-Route::get('/cartitems', [CartItemsController::class, 'index']);
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index']);
-Route::get('/orderitems', [OrderItemsController::class, 'index']);
-Route::get('/payments', [PaymentsController::class, 'index']);
-Route::get('/products', [ProductsController::class, 'index']);
-Route::get('/product-images', [ProductImagesController::class, 'index']);
-Route::get('/product-sizes', [ProductSizesController::class, 'index']);
-Route::get('/reviews', [ReviewsController::class, 'index']);
-Route::get('/users', [UsersController::class, 'index']);
-Route::get('/sizes', [SizesController::class, 'index']);
-Route::get('/orders', [OrdersController::class, 'index']);
-
+// CRUD Resources
 Route::apiResource('brands', BrandsController::class);
+Route::apiResource('carts', CartController::class);
+Route::apiResource('cartitems', CartItemsController::class);
+Route::apiResource('dashboard', DashboardController::class);
+Route::apiResource('categories', CategoriesController::class);
+Route::apiResource('login', LoginController::class);
+Route::apiResource('orderitems', OrderItemsController::class);
+Route::apiResource('payments', PaymentsController::class);
+Route::apiResource('products', ProductsController::class);
+Route::apiResource('product-images', ProductImagesController::class);
+Route::apiResource('product-sizes', ProductSizesController::class);
+Route::apiResource('reviews', ReviewsController::class);
+Route::apiResource('users', UsersController::class);
+Route::apiResource('sizes', SizesController::class);
+Route::apiResource('orders', OrdersController::class);
