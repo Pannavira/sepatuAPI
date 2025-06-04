@@ -1,0 +1,3 @@
+git add .
+git commit -m "Text yang ingin di masukan"
+git push origin main
