@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Users extends Model
+class Users extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'users';
 
-    // Ini yang harus ditambahkan
     protected $fillable = [
         'name',
         'email',
@@ -19,5 +20,10 @@ class Users extends Model
         'phone',
         'address',
         'role',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 }

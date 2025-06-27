@@ -26,4 +26,33 @@ class Products extends Model
         'category_id' => 'integer',
         'brand_id' => 'integer'
     ];
+
+public function images()
+{
+    return $this->hasMany(ProductImages::class, 'product_id');
+}
+
+public function sizes()
+{
+    return $this->hasMany(ProductSizes::class, 'product_id')->with('size');
+}
+
+public function brand()
+{
+    return $this->belongsTo(Brands::class, 'brand_id');
+}
+
+public function category()
+{
+    return $this->belongsTo(Categories::class, 'category_id');
+}
+
+public function reviews()
+{
+    return $this->hasMany(Reviews::class, 'product_id')->with('user');
+}
+
+
+
+
 }

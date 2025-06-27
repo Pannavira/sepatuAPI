@@ -13,4 +13,14 @@ class Cart extends Model
         'user_id',
     ];
     public $timestamps = false;
+
+    public function items()
+    {
+        return $this->hasMany(CartItems::class, 'cart_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -8,6 +8,22 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
+
+
+    public function detail($id)
+{
+    $product = Products::with([
+        'images',
+        'sizes.size',
+        'brand',
+        'category',
+        'reviews.user'
+    ])->findOrFail($id);
+
+    return view('produk.detail', compact('product'));
+}
+
+
     // READ - Get all products or filtered products
     public function index(Request $request)
     {

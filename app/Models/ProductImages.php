@@ -40,19 +40,16 @@ class ProductImages extends Model
      */
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Products::class);
     }
 
     /**
      * Get the full URL for the image.
      */
     public function getImageUrlAttribute($value)
-    {
-        if ($value && !str_starts_with($value, 'http')) {
-            return asset('storage/' . $value);
-        }
-        return $value;
-    }
+{
+    return asset($value); // Langsung akses ke folder public/
+}
 
     /**
      * Scope to filter by product ID.
