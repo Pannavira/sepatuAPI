@@ -12,6 +12,24 @@ class ProductSizesController extends Controller
     /**
      * Display the specified resource (READ by ID)
      */
+
+    public function index()
+{
+    try {
+        $productSizes = ProductSizes::with(['product', 'size'])->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'data' => $productSizes
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ], 500);
+    }
+}
     public function show($product_size) // Ganti dari $id ke $product_size
     {
         try {
@@ -130,4 +148,52 @@ class ProductSizesController extends Controller
             ], 500);
         }
     }
+
+    public function deleteByProduct($productId)
+{
+    ProductSizes::where('product_id', $productId)->delete();
+
+    return response()->json(['message' => 'Semua ukuran produk berhasil dihapus.']);
+}
+
+public function store(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'product_id' => 'required|exists:products,id',
+        'size_id' => 'required|exists:sizes,id',
+        'stock_per_size' => 'required|integer|min:0'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Validasi gagal',
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    // Cek apakah kombinasi sudah ada
+    $exists = ProductSizes::where('product_id', $request->product_id)
+                          ->where('size_id', $request->size_id)
+                          ->exists();
+
+    if ($exists) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Kombinasi product_id dan size_id sudah ada'
+        ], 409);
+    }
+
+    $productSize = ProductSizes::create([
+        'product_id' => $request->product_id,
+        'size_id' => $request->size_id,
+        'stock_per_size' => $request->stock_per_size
+    ]);
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Stok per ukuran berhasil ditambahkan',
+        'data' => $productSize
+    ], 201);
+}
 }

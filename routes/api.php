@@ -33,3 +33,8 @@ Route::apiResource('reviews', ReviewsController::class);
 Route::apiResource('users', UsersController::class);
 Route::apiResource('sizes', SizesController::class);
 Route::apiResource('orders', OrdersController::class);
+
+Route::post('/admin/login', [UsersController::class, 'login']);
+Route::delete('/product_images/delete_by_product/{product_id}', [ProductImagesController::class, 'deleteByProduct']);
+Route::delete('/product_sizes/delete_by_product/{product_id}', [ProductSizesController::class, 'deleteByProduct']);
+

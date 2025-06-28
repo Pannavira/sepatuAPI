@@ -27,7 +27,7 @@ class ProductsController extends Controller
     // READ - Get all products or filtered products
     public function index(Request $request)
     {
-        $query = Products::query();
+        $query = Products::with(['images', 'category', 'sizes.size', 'brand']);
 
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -231,4 +231,6 @@ class ProductsController extends Controller
             ], 500);
         }
     }
+
+    
 }

@@ -169,4 +169,36 @@ class UsersController extends Controller
             'message' => 'User deleted successfully'
         ]);
     }
+
+    public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    $user = Users::where('email', $request->email)->first();
+
+    if (!$user || !\Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Email atau password salah'
+        ], 401);
+    }
+
+    if ($user->role !== 'admin') {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Akses hanya untuk admin'
+        ], 403);
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'user' => $user->makeHidden(['password'])
+    ]);
+
+    
+}
+
 }

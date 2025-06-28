@@ -275,4 +275,11 @@ class ProductImagesController extends Controller
             ], 500);
         }
     }
+
+    public function deleteByProduct($productId)
+{
+    ProductImages::where('product_id', $productId)->delete();
+
+    return response()->json(['message' => 'Semua gambar produk berhasil dihapus.']);
+}
 }
