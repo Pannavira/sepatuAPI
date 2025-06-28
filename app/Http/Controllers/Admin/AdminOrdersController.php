@@ -9,8 +9,10 @@ class AdminOrdersController extends Controller
 {
     public function index()
     {
-        $response = Http::get(url('/api/orders?with=user,order_items.product'));
-        $orders = $response->json()['data'] ?? [];
+        $response = Http::get(url('/api/orders'));
+
+        // API kamu mengembalikan array langsung, jadi cukup ini:
+        $orders = $response->json();
 
         return view('admin.orders.index', compact('orders'));
     }

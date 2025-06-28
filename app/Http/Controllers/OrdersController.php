@@ -11,7 +11,7 @@ class OrdersController extends Controller
     // READ - Get all orders or filter by parameters
     public function index(Request $request)
     {
-        $query = Orders::query();
+        $query = Orders::with('user');
 
         if ($request->has('id')) {
             $query->where('id', $request->id);
@@ -127,6 +127,17 @@ class OrdersController extends Controller
     public function update(Request $request, $id)
     {
         $order = Orders::find($id);
+
+            if ($request->has('id')) {
+        $order->where('id', $request->id);
+    }
+
+    if ($request->has('user_id')) {
+        $order->where('user_id', $request->user_id);
+    }
+
+    $get = $order->get();
+
 
         if (!$order) {
             return response()->json([

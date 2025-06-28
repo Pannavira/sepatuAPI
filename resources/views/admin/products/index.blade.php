@@ -21,6 +21,7 @@
                 <th>Harga</th>
                 <th>Stok</th>
                 <th>Kategori</th>
+                <th>Brand</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -37,6 +38,7 @@
                     <td>Rp{{ number_format($p['price'], 0, ',', '.') }}</td>
                     <td>{{ $p['stock'] }}</td>
                     <td>{{ $p['category']['name'] ?? '-' }}</td>
+                    <td>{{ $p['brand']['name'] ?? '-' }}</td>
                     <td>
                         <!-- Edit Button -->
                         <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $p['id'] }}">
@@ -67,6 +69,16 @@
                                                     <label>Stok</label>
                                                     <input type="number" name="stock" value="{{ $p['stock'] }}" class="form-control" disabled>
                                                 </div>
+                                                <div class="col-md-6 mb-3">
+    <label>Brand</label>
+    <select name="brand_id" class="form-select">
+        @foreach ($brands as $brand)
+            <option value="{{ $brand['id'] }}" {{ $brand['id'] == ($p['brand_id'] ?? null) ? 'selected' : '' }}>
+                {{ $brand['name'] }}
+            </option>
+        @endforeach
+    </select>
+</div>
                                                 <div class="mb-3">
     <label>Link Gambar (boleh lebih dari 1)</label>
 

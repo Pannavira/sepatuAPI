@@ -29,9 +29,8 @@ class Orders extends Model
         'total_price' => 'decimal:2'
     ];
 
-    // Relationships (optional - jika ada tabel users)
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+public function user()
+{
+    return $this->belongsTo(\App\Models\User::class);
+}
 }

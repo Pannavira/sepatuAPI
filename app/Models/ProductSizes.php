@@ -36,4 +36,28 @@ class ProductSizes extends Model
 {
     return $this->belongsTo(\App\Models\Sizes::class, 'size_id');
 }
+
+protected static function booted()
+{
+    static::created(function ($productSize) {
+        self::updateProductStock($productSize->product_id);
+    });
+
+    static::updated(function ($productSize) {
+        self::updateProductStock($productSize->product_id);
+    });
+
+    static::deleted(function ($productSize) {
+        self::updateProductStock($productSize->product_id);
+    });
+}
+
+public static function updateProductStock($productId)
+{
+    $totalStock = self::where('product_id', $productId)->sum('stock_per_size');
+
+    \App\Models\Products::where('id', $productId)->update([
+        'stock' => $totalStock
+    ]);
+}
 }

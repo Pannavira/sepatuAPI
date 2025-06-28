@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 class AdminProductsController extends Controller
 {
     public function index()
-    {
-        $response = Http::get(url('/api/products?with=images,category,sizes.size'));
-        $products = $response->json();
-        $categories = Http::get(url('/api/categories'))->json();
+{
+    $response = Http::get(url('/api/products?with=images,category,sizes.size,brand'));
+    $products = $response->json();
+    $categories = Http::get(url('/api/categories'))->json();
+    $brands = Http::get(url('/api/brands'))->json();
 
-        return view('admin.products.index', compact('products', 'categories'));
-    }
+    return view('admin.products.index', compact('products', 'categories', 'brands'));
+}
 
     public function create()
     {
@@ -49,12 +50,15 @@ class AdminProductsController extends Controller
 
 
     public function edit($id)
-    {
-        $response = Http::get(url("/api/products/$id?with=images,category,sizes.size"));
-        $product = $response->successful() ? $response->json() : null;
+{
+    $response = Http::get(url("/api/products/$id?with=images,category,sizes.size,brand"));
+    $product = $response->successful() ? $response->json() : null;
 
-        return view('admin.products.edit', compact('product'));
-    }
+    $categories = Http::get(url('/api/categories'))->json();
+    $brands = Http::get(url('/api/brands'))->json();
+
+    return view('admin.products.edit', compact('product', 'categories', 'brands'));
+}
 
     public function update(Request $request, $id)
 {
