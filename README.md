@@ -66,6 +66,57 @@ PUT     /api/product-sizes/{id}
 DELETE  /api/products/{id}
 ```
 
+### 👥 Contributors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Pannavira">
+        <img src="https://github.com/Pannavira.png" width="100px;" alt="pannavira"/>
+        <br />
+        <sub><b>pannavira</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/MuradNi">
+        <img src="https://github.com/MuradNi.png" width="100px;" alt="Muradni"/>
+        <br />
+        <sub><b>Steven ML</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Richardo0708">
+        <img src="https://github.com/Richardo0708.png" width="100px;" alt="Richardo"/>
+        <br />
+        <sub><b>Richardo Dighayuka</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Davisvincentius">
+        <img src="https://github.com/Davisvincentius.png" width="100px;" alt="Davis"/>
+        <br />
+        <sub><b>Davis Vincentius</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Freddyten">
+        <img src="https://github.com/Freddyten.png" width="100px;" alt="Fred"/>
+        <br />
+        <sub><b>Freddy</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+
 
 # Project Laravel
 
