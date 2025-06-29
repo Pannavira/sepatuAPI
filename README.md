@@ -40,7 +40,7 @@ Tonton video panduan clone dan setup oleh [@Dirumahrafif](https://www.youtube.co
 ## 📁 Cara Install
 
 ```bash
-git clone https://github.com/username/sepatuAPI.git
+git clone https://github.com/Pannavira/sepatuAPI.git
 cd sepatuAPI
 
 composer install
