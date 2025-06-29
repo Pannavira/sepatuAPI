@@ -1,9 +1,62 @@
 
 # sepatuAPI
-Project WEB API
 
-# Tutorial Untuk Clone Repository
-Untuk melakukan clone repository, silakan klik tautan berikut: [Video Tutorial oleh @Dirumahrafif](https://youtu.be/PYFV_IFHg2U?si=tvlZFdkn9usVf-pg)
+**sepatuAPI** adalah sebuah proyek RESTful API berbasis Laravel yang digunakan untuk keperluan e-commerce sepatu. API ini memungkinkan pengelolaan produk, kategori, ukuran, brand, stok per ukuran, keranjang, dan order. Proyek ini juga digunakan bersama dengan antarmuka dashboard admin dan frontend pengguna berbasis Blade.
+
+> 🎨 Gambar produk dalam proyek ini dibuat menggunakan **Gemini AI**.
+
+---
+
+## 🔧 Fitur
+
+- CRUD Produk, Kategori, Brand
+- Manajemen Ukuran dan Stok per Ukuran
+- Keranjang Belanja Dinamis
+- Checkout dan Order
+- Upload & Multiple Gambar Produk
+- Role-based Admin Panel
+- Full REST API menggunakan Laravel Resource
+- Autentikasi berbasis Token (JWT / Passport)
+
+---
+
+## 🚀 Demo
+
+Tonton video panduan clone dan setup oleh [@Dirumahrafif](https://www.youtube.com/@dirumahrafif):
+
+🎥 [Klik di sini untuk video tutorial](https://youtu.be/PYFV_IFHg2U?si=tvlZFdkn9usVf-pg)
+
+---
+
+## 📦 Teknologi yang Digunakan
+
+- **Laravel 10+**
+- **MySQL**
+- **Blade Template Engine**
+- **Laravel Passport / JWT**
+- **Bootstrap 5**
+- **RESTful API**
+- **Axios / Fetch (client)**
+- **Gemini AI (gambar produk)**
+
+---
+
+## 📁 Cara Install
+
+```bash
+git clone https://github.com/username/sepatuAPI.git
+cd sepatuAPI
+
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# Buat database baru (cth: sepatu_db), lalu edit .env
+php artisan migrate --seed
+
+php artisan serve
+
+
 
 
 
