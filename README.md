@@ -54,6 +54,18 @@ php artisan serve
 
 ```
 
+## Dokumentasi API
+Semua endpoint REST API dapat diakses via ```bash 
+LOCALHOST/api. ```
+
+Contoh endpoint:
+
+```bash
+GET     /api/products
+POST    /api/cart
+PUT     /api/product-sizes/{id}
+DELETE  /api/products/{id}
+```
 
 
 # Project Laravel
