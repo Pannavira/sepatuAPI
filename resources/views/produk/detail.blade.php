@@ -70,7 +70,14 @@
                 </div>
             </div>
 
-            <button class="btn btn-dark w-100">Tambah ke Keranjang</button>
+            <form method="POST" action="{{ route('cart.add') }}">
+    @csrf
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="size_id" value="{{ $product->sizes->first()->id ?? '' }}"> <!-- default size -->
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" class="btn btn-dark w-100">Tambah ke Keranjang</button>
+</form>
+
         </div>
     </div>
 

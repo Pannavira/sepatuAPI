@@ -19,9 +19,12 @@ class AdminProductsController extends Controller
 }
 
     public function create()
-    {
-        return view('admin.products.create');
-    }
+{
+    $categories = Http::get(url('/api/categories'))->json();
+$brands = Http::get(url('/api/brands'))->json();
+
+    return view('admin.products.create', compact('categories', 'brands'));
+}
 
     public function store(Request $request)
 {

@@ -1,12 +1,9 @@
 @extends('layouts.app')
-
+@include('partials.navbar')
 @section('content')
     <div class="container py-5">
         <h2 class="mb-4 text-center fw-bold">Keranjang Belanja</h2>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
 
         @if($cartItems->isEmpty())
             <div class="text-center text-muted">

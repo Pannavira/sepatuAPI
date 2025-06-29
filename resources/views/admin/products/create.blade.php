@@ -19,17 +19,28 @@
             <input type="number" name="price" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label>Stok</label>
-            <input type="number" name="stock" class="form-control" required>
+            <input type="number" name="stock" class="form-control" required value="0" hidden>
         </div>
         <div class="mb-3">
-            <label>Kategori ID</label>
-            <input type="number" name="category_id" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Brand ID</label>
-            <input type="number" name="brand_id" class="form-control" required>
-        </div>
+    <label>Kategori</label>
+    <select name="category_id" class="form-select" required>
+        <option value="" disabled selected>-- Pilih Kategori --</option>
+        @foreach($categories as $category)
+            <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+        @endforeach
+    </select>
+</div>
+
+<div class="mb-3">
+    <label>Brand</label>
+    <select name="brand_id" class="form-select" required>
+        <option value="" disabled selected>-- Pilih Brand --</option>
+        @foreach($brands as $brand)
+            <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
+        @endforeach
+    </select>
+</div>
+
         <button class="btn btn-primary">Simpan</button>
     </form>
 </div>

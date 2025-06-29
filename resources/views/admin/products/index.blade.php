@@ -5,12 +5,6 @@
     <h2>Daftar Produk</h2>
     <a href="{{ route('admin.products.create') }}" class="btn btn-success mb-3">+ Tambah Produk</a>
 
-    @if(session('success'))
-        <div class="alert alert-success position-fixed top-0 end-0 m-4 z-3" style="min-width: 250px;">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <table class="table table-bordered text-center align-middle">
         <thead class="table-dark">
             <tr>

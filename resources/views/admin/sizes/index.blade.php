@@ -4,9 +4,6 @@
 <div class="container py-4">
     <h2>Kelola Ukuran</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
     <form method="POST" action="{{ route('admin.sizes.store') }}" class="row g-3 mb-4">
         @csrf

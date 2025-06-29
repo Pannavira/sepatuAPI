@@ -77,6 +77,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('product-sizes', AdminProductSizesController::class);
+    Route::put('/admin/product-sizes/{id}', [AdminProductSizesController::class, 'update'])->name('admin.product-sizes.update');
+
 });
 
 //Admin Orders

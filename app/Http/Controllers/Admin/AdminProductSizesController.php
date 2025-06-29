@@ -45,4 +45,18 @@ class AdminProductSizesController extends Controller
 
         return back()->with('success', 'Data berhasil dihapus.');
     }
+
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'stock_per_size' => 'required|integer|min:0',
+    ]);
+
+    Http::put(url("/api/product-sizes/$id"), [
+        'stock_per_size' => $request->stock_per_size
+    ]);
+
+    return redirect()->route('admin.product-sizes.index')->with('success', 'stok berhasil diperbarui.');
+}
+
 }
