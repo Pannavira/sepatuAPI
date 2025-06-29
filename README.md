@@ -3,7 +3,7 @@
 
 **sepatuAPI** adalah sebuah proyek RESTful API berbasis Laravel yang digunakan untuk keperluan e-commerce sepatu. API ini memungkinkan pengelolaan produk, kategori, ukuran, brand, stok per ukuran, keranjang, dan order. Proyek ini juga digunakan bersama dengan antarmuka dashboard admin dan frontend pengguna berbasis Blade.
 
-> 🎨 Gambar produk dalam proyek ini dibuat menggunakan **Gemini AI**.
+🎨 Gambar produk dalam proyek ini dibuat menggunakan **Gemini AI**.
 
 ---
 
@@ -12,11 +12,9 @@
 - CRUD Produk, Kategori, Brand
 - Manajemen Ukuran dan Stok per Ukuran
 - Keranjang Belanja Dinamis
-- Checkout dan Order
 - Upload & Multiple Gambar Produk
 - Role-based Admin Panel
 - Full REST API menggunakan Laravel Resource
-- Autentikasi berbasis Token (JWT / Passport)
 
 ---
 
@@ -33,11 +31,9 @@ Tonton video panduan clone dan setup oleh [@Dirumahrafif](https://www.youtube.co
 - **Laravel 10+**
 - **MySQL**
 - **Blade Template Engine**
-- **Laravel Passport / JWT**
 - **Bootstrap 5**
 - **RESTful API**
-- **Axios / Fetch (client)**
-- **Gemini AI (gambar produk)**
+- **Gemini AI (generate gambar produk)**
 
 ---
 
@@ -56,7 +52,7 @@ php artisan migrate --seed
 
 php artisan serve
 
-
+```
 
 
 
