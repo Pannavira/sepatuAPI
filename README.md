@@ -55,8 +55,8 @@ php artisan serve
 ```
 
 ## Dokumentasi API
-Semua endpoint REST API dapat diakses via ```bash 
-LOCALHOST/api. ```
+Semua endpoint REST API dapat diakses via ```
+LOCALHOST/api```
 
 Contoh endpoint:
 
