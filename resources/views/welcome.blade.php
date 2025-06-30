@@ -6,131 +6,57 @@
     <title>Beranda | SEPATOO.ID</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f8f9fa;
-            color: #212529;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: url('/images/Hero.png') no-repeat center center;
-            background-size: cover;
-            position: relative;
-            height: 65vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1;
-        }
-
-        .hero .content {
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            color: #ffc107;
-        }
-
-        .hero .btn {
-            padding: 0.7rem 2rem;
-            font-size: 1rem;
-            border-radius: 30px;
-        }
-
-        /* Product Grid */
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .product-card {
-            border: none;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            background-color: #ffffff;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-card img {
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .card-body {
-            padding: 1rem;
-        }
-
-        .rating i {
-            color: #ffc107;
-            font-size: 0.95rem;
-        }
-
-        .price {
-            font-weight: bold;
-            color: #0d6efd;
-        }
-
-        .btn-outline-dark {
-            border-radius: 30px;
-            padding: 0.4rem 1rem;
-            font-weight: 500;
-        }
-
-        footer {
-            background-color: #f1f1f1;
-        }
-
-        .no-products {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #6c757d;
-            margin-top: 3rem;
-        }
-    </style>
 </head>
 <body>
 
     @include('partials.navbar')
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="content">
-            <h1>Langkah Penuh Gaya</h1>
-            <p>Temukan sepatu favoritmu dari koleksi sneaker premium kami</p>
-            <a href="#produk" class="btn btn-warning fw-semibold shadow-sm">Lihat Koleksi</a>
+   <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="hero">
+                <div class="content">
+                    <h1>Langkah Penuh Gaya</h1>
+                    <p>Temukan sepatu favoritmu dari koleksi sneaker premium kami</p>
+                    <a href="#produk" class="btn btn-warning fw-semibold shadow-sm">Lihat Koleksi</a>
+                </div>
+            </div>
         </div>
-    </section>
-
+        <div class="carousel-item active">
+            <div class="jaket">
+                <div class="content">
+                    <h1>Langkah Penuh Gaya</h1>
+                    <p>Temukan sepatu favoritmu dari koleksi sneaker premium kami</p>
+                    <a href="#produk" class="btn btn-warning fw-semibold shadow-sm">Lihat Koleksi</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item active">
+            <div class="jike2">
+                <div class="content">
+                    <h1>Langkah Penuh Gaya</h1>
+                    <p>Temukan sepatu favoritmu dari koleksi sneaker premium kami</p>
+                    <a href="#produk" class="btn btn-warning fw-semibold shadow-sm">Lihat Koleksi</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+    </div>
     <!-- Product Section -->
     <div class="container py-5" id="produk">
         <h2 class="section-title">Produk Unggulan</h2>
