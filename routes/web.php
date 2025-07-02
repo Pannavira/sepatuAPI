@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminSizeController;
 use App\Http\Controllers\Admin\AdminProductSizesController;
 use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,8 +90,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
 
 
-
-
 Route::get('/category/{id}', [CategoryPageController::class, 'show'])->name('category.show');
 Route::middleware(['auth'])->group(function () {
 
@@ -100,4 +100,17 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
 
 
+});
+
+Route::middleware(['auth'])->group(function () {
+    // Checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/checkout/success/{orderId}', [CheckoutController::class, 'success'])->name('checkout.success');
+    
+    // Orders
+    Route::get('/orders/{order}', [CheckoutController::class, 'orderDetail'])->name('orders.detail');
+    Route::get('/my-orders', [OrdersController::class, 'index'])->name('orders.index');
+    
+    Route::put('/orders/{order}/payment-status', [CheckoutController::class, 'updatePaymentStatus'])->name('orders.update-payment');
 });

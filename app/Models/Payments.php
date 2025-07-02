@@ -9,12 +9,6 @@ class Payments extends Model
 {
     use HasFactory;
 
-    protected $table = 'payments';
-    
-    // Disable automatic timestamp management
-    public $timestamps = false;
-
-    // Kolom yang bisa diisi
     protected $fillable = [
         'order_id',
         'payment_date',
@@ -23,9 +17,31 @@ class Payments extends Model
         'payment_status'
     ];
 
-    // Relasi ke tabel orders (jika ada)
+    protected $casts = [
+        'payment_date' => 'datetime',
+        'amount' => 'decimal:2'
+    ];
+
+    /**
+     * Get the order that owns the payment
+     */
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Orders::class, 'order_id');
+    }
+
+    /**
+     * Get the payment status badge class
+     */
+    public function getStatusBadgeAttribute()
+    {
+        $badges = [
+            'pending' => 'badge-warning',
+            'completed' => 'badge-success',
+            'failed' => 'badge-danger',
+            'cancelled' => 'badge-secondary'
+        ];
+
+        return $badges[$this->payment_status] ?? 'badge-secondary';
     }
 }

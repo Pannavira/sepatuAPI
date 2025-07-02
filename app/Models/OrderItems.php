@@ -11,7 +11,7 @@ class OrderItems extends Model
     
     protected $table = 'order_items';
     
-    // Disable timestamps jika tabel tidak punya created_at dan updated_at
+    // Disable timestamps since table doesn't have created_at and updated_at columns
     public $timestamps = false;
     
     protected $fillable = [
@@ -32,7 +32,7 @@ class OrderItems extends Model
      */
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Orders::class, 'order_id');
     }
 
     /**
@@ -40,7 +40,7 @@ class OrderItems extends Model
      */
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Products::class, 'product_id');
     }
 
     /**
@@ -48,6 +48,14 @@ class OrderItems extends Model
      */
     public function size()
     {
-        return $this->belongsTo(Size::class);
+        return $this->belongsTo(Sizes::class, 'size_id');
+    }
+
+    /**
+     * Get the total price for this item (quantity * price)
+     */
+    public function getTotalPriceAttribute()
+    {
+        return $this->quantity * $this->price;
     }
 }

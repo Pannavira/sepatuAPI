@@ -90,7 +90,7 @@
             </div>
 
             <div class="text-end mt-4">
-                <a href="#" class="btn btn-success btn-lg">Checkout</a>
+                <a href="{{ route('checkout.index') }}" class="btn btn-success btn-lg">Checkout</a>
             </div>
         @endif
     </div>
