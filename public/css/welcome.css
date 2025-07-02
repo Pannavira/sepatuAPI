@@ -1,0 +1,199 @@
+body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('/images/Hero.png') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            height: 65vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .hero .content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: #ffc107;
+        }
+
+        .hero .btn {
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            border-radius: 30px;
+        }
+
+        .jaket {
+            background: url('/images/jaket.png') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            height: 65vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .jaket::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .jaket .content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .jaket h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .jaket p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: #ffc107;
+        }
+
+        .jaket .btn {
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            border-radius: 30px;
+        }
+
+        .jike2 {
+            background: url('/images/jike2.png') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            height: 65vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .jike2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .jike2 .content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .jike2 h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .jike2 p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: #ffc107;
+        }
+
+        .jike2 .btn {
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            border-radius: 30px;
+        }
+
+        
+        /* Product Grid */
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background-color: #ffffff;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .rating i {
+            color: #ffc107;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .btn-outline-dark {
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            font-weight: 500;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+        }
+
+        .no-products {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-top: 3rem;
+        }
