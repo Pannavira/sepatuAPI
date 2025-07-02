@@ -107,9 +107,6 @@
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('orders.detail', $order->id) }}" class="btn btn-outline-primary">
-                            <i class="bi bi-eye"></i> Lihat Detail Pesanan
-                        </a>
                         <a href="/" class="btn btn-primary">
                             <i class="bi bi-house"></i> Kembali Berbelanja
                         </a>
