@@ -56,7 +56,9 @@ php artisan serve
 
 ## Dokumentasi API
 Semua endpoint REST API dapat diakses via ```LOCALHOST/api```
-[Klik disini untuk dokumentasi versi postman](https://documenter.getpostman.com/view/44534955/2sB34bJi6j)
+
+[Dokumentasi versi Postman](https://documenter.getpostman.com/view/44534955/2sB34bJi6j)
+
 Contoh endpoint: 
 ```bash
 GET     /api/products
