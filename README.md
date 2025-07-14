@@ -28,7 +28,7 @@ Tonton video panduan clone dan setup oleh [@Dirumahrafif](https://www.youtube.co
 
 ## 📦 Teknologi yang Digunakan
 
-- **Laravel 10+**
+- **Laravel**
 - **MySQL**
 - **Blade Template Engine**
 - **Bootstrap 5**
